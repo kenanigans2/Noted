@@ -127,5 +127,21 @@ class NoteStructTests: XCTestCase
         let dateLastModified2 = testNote.getDateMetadata(.LastModified)
         XCTAssertEqual(dateLastModified1, dateLastModified2)
     }
+    
+    // MARK:- EQUATABLE
+    
+    func testEquatable_AllSameProperties_ReturnsEqual()
+    {
+        let testNote1 = Note(title: "test note", content: "test content")
+        let testNote2 = testNote1
+        
+        if testNote1.getDateMetadata(.Created) == testNote2.getDateMetadata(.Created),
+            testNote1.getDateMetadata(.LastModified) == testNote2.getDateMetadata(.LastModified),
+            testNote1.getDateMetadata(.LastAccessed) == testNote2.getDateMetadata(.LastAccessed)
+        {
+            XCTAssertEqual(testNote1, testNote2)
+        }
+        else { XCTFail() }
+    }
 
 }

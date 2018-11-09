@@ -63,13 +63,28 @@ extension Note
     
     var title: String?
     {
-        mutating get { dateMetadata.lastAccessed = Date(); return contentData.title }
+        get { return contentData.title }
         set { contentData.title = newValue }
     }
     
     var content: String
     {
-        mutating get { dateMetadata.lastAccessed = Date(); return contentData.content }
+        get { return contentData.content }
         set { contentData.content = newValue }
+    }
+}
+
+extension Note: Equatable
+{
+    static func ==(lhs: Note, rhs: Note) -> Bool
+    {
+        if lhs.title == rhs.title,
+            lhs.content == rhs.content,
+            lhs.getDateMetadata(.Created) == rhs.getDateMetadata(.Created),
+            lhs.getDateMetadata(.LastModified) == rhs.getDateMetadata(.LastModified),
+            lhs.getDateMetadata(.LastAccessed) == rhs.getDateMetadata(.LastAccessed)
+        { return true }
+        
+        return false
     }
 }
